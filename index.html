@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factory Constructors in Dart | Materi Lengkap + Contoh</title>
+    <title>SESI 10: Factory Constructors - Dart | Fajar Rio Dinata</title>
     <style>
         * {
             margin: 0;
@@ -12,327 +12,344 @@
         }
 
         body {
-            background: linear-gradient(145deg, #2c0a0a 0%, #1a0303 100%);
+            background: linear-gradient(135deg, #1a0505 0%, #0d0202 100%);
             font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
-            padding: 2rem 1.5rem;
-            color: #f5e6e6;
+            padding: 2rem;
+            color: #f0e6e6;
         }
 
         .container {
-            max-width: 1300px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* header identitas merah elegan */
-        .identity {
-            background: rgba(110, 20, 20, 0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 1rem 2rem;
+        /* Header Identitas */
+        .identity-header {
+            background: linear-gradient(95deg, #8b1a1a, #4a0e0e);
+            border-radius: 1.5rem;
+            padding: 1.2rem 2rem;
             margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             flex-wrap: wrap;
-            border: 1px solid #e05a5a;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 0 2px rgba(220, 60, 60, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border: 1px solid #e66767;
         }
         .nama {
-            font-size: 1.65rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffb3b3, #ff7a7a);
+            background: linear-gradient(120deg, #ffc4c4, #ff8a8a);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            letter-spacing: -0.3px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         .nim {
-            font-family: 'Fira Code', monospace;
-            font-size: 1rem;
-            background: #3e1414;
+            font-family: monospace;
+            font-size: 1.2rem;
+            background: #2d0a0a;
             padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            color: #ffb7b7;
-            border: 1px solid #dc6a6a;
-        }
-
-        /* section utama */
-        .section-card {
-            background: rgba(30, 10, 10, 0.7);
-            backdrop-filter: blur(6px);
             border-radius: 2rem;
+            border: 1px solid #e07a7a;
+        }
+
+        /* Card Slide */
+        .slide-card {
+            background: rgba(40, 12, 12, 0.85);
+            backdrop-filter: blur(6px);
+            border-radius: 1.8rem;
             margin-bottom: 2rem;
-            border: 1px solid #b34e4e;
+            border: 1px solid #bd5a5a;
             overflow: hidden;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s;
         }
-
-        .section-header {
-            background: #4e1a1a;
+        .slide-title {
+            background: #6b2020;
             padding: 1rem 2rem;
-            border-bottom: 3px solid #ff7b6e;
-        }
-        .section-header h2 {
-            font-size: 1.7rem;
+            border-left: 8px solid #ff7b6e;
+            font-size: 1.4rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #ffcfcf;
         }
-        .section-header h2 i {
-            font-size: 1.8rem;
-        }
-
-        .section-body {
+        .slide-content {
             padding: 1.8rem 2rem;
         }
-
         .code-block {
-            background: #1e0808;
+            background: #1a0707;
             border-radius: 1.2rem;
-            padding: 1.2rem 1.5rem;
-            margin: 1.2rem 0;
+            padding: 1.2rem;
+            margin: 1rem 0;
             overflow-x: auto;
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-family: 'Fira Code', 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             line-height: 1.5;
-            border-left: 5px solid #ff5e5e;
-            box-shadow: inset 0 0 8px #00000040, 0 5px 12px rgba(0,0,0,0.3);
+            border-left: 4px solid #ff6b6b;
         }
-        .code-block pre {
+        pre {
             margin: 0;
-            color: #f3cfcf;
+            color: #f0d6d6;
         }
-        .keyword { color: #ffad7a; font-weight: 500; }
-        .type { color: #7fbfff; }
-        .string { color: #c3e88d; }
-        .comment { color: #b37b7b; font-style: italic; }
-        .note { color: #ffb86c; }
-        
-        .highlight-box {
-            background: #3e1616;
-            border-left: 6px solid #ff7b6e;
-            padding: 1rem 1.6rem;
+        .keyword { color: #ffab6f; font-weight: 500; }
+        .type { color: #7fc9ff; }
+        .string { color: #b5e3a0; }
+        .comment { color: #bc8a8a; font-style: italic; }
+        .number { color: #ffb86c; }
+        .highlight {
+            background: #2f1515;
+            padding: 1rem;
             border-radius: 1rem;
-            margin: 1.2rem 0;
-        }
-        .grid-cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        .card-pattern {
-            background: #261010;
-            flex: 1 1 250px;
-            padding: 1.2rem;
-            border-radius: 1.2rem;
-            border: 1px solid #bd5a5a;
-            transition: all 0.2s;
-        }
-        .card-pattern h3 {
-            color: #ff9f8f;
-            margin-bottom: 0.8rem;
+            margin: 1rem 0;
+            border-left: 5px solid #ff7b6e;
         }
         hr {
-            margin: 1.8rem 0;
+            margin: 1.5rem 0;
             border: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #a13a3a, #e07a6a, #a13a3a);
+            height: 1px;
+            background: linear-gradient(90deg, #a33, #e66, #a33);
         }
-        .footer-note {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.75rem;
-            opacity: 0.75;
-            border-top: 1px solid #732a2a;
-            padding-top: 1.5rem;
-        }
-        .badge-topic {
+        .badge-page {
             display: inline-block;
             background: #992d2d;
             padding: 0.2rem 1rem;
-            border-radius: 50px;
+            border-radius: 20px;
             font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            letter-spacing: 0.6px;
+            margin-right: 1rem;
         }
         ul, ol {
-            padding-left: 1.5rem;
-            margin: 0.8rem 0;
+            margin: 0.8rem 0 0.8rem 1.8rem;
         }
         li {
-            margin: 0.45rem 0;
+            margin: 0.4rem 0;
         }
-        strong {
-            color: #ffb4a2;
-        }
-        .warning-red {
-            background: #511c1c;
-            border-left: 5px solid #ff5252;
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            font-size: 0.7rem;
+            color: #b77c7c;
+            border-top: 1px solid #632a2a;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <!-- Nama & NIM wajib -->
-    <div class="identity">
-        <span class="nama">🔥 Fajar Rio Dinata</span>
-        <span class="nim">📌 NIM : 251410025</span>
+    <!-- Identitas Mahasiswa -->
+    <div class="identity-header">
+        <span class="nama">🎓 Fajar Rio Dinata</span>
+        <span class="nim">📌 NIM: 251410025</span>
     </div>
 
-    <!-- PENDAHULUAN: Factory Constructors -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>🏭</span> Factory Constructors · Konsep & Perbedaan Dasar</h2>
+    <!-- ==================== SLIDE 1 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 1 / 14</span> 📘 SESI 10: Factory Constructors
         </div>
-        <div class="section-body">
-            <div class="badge-topic">✨ SESI 10 — DURASI 200 MENIT</div>
-            <p><strong>Factory constructor</strong> adalah constructor khusus di Dart yang <strong>TIDAK selalu membuat instance baru</strong>. Ditandai dengan keyword <code class="note">factory</code>. Berbeda dengan generative constructor yang selalu menghasilkan instance baru, factory constructor bisa mengembalikan instance yang sudah ada (cached), instance dari subclass, atau bahkan objek dari pool.</p>
-            <div class="highlight-box">
-                <strong>📌 Perbedaan utama:</strong><br>
-                ▪ <strong>Generative constructor</strong> → selalu membuat objek baru.<br>
-                ▪ <strong>Factory constructor</strong> → fleksibel: bisa return instance existing, subclass, atau instance baru dari cache.
-            </div>
+        <div class="slide-content">
+            <p><strong>Durasi:</strong> 200 menit | <strong>Total Slide:</strong> 14</p>
+            <p>Materi kali ini membahas <strong>Factory Constructors</strong> di Dart, mulai dari konsep dasar, perbedaan dengan generative constructor, hingga studi kasus seperti Singleton, Caching, dan Pengembalian Subclass.</p>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 2 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 2</span> 🔄 Review Sesi 9 – Extension Methods
+        </div>
+        <div class="slide-content">
+            <ul>
+                <li>Extension methods: menambahkan fungsi ke tipe yang sudah ada</li>
+                <li>Sintaks: <code>extension Nama on Tipe { ... }</code></li>
+                <li>Contoh: <code>'hello'.capitalize()</code></li>
+            </ul>
             <div class="code-block">
                 <pre>
-<span class="keyword">class</span> <span class="type">Demo</span> {
-    <span class="comment">// generative biasa</span>
-    Demo();
-    
-    <span class="comment">// factory constructor</span>
-    <span class="keyword">factory</span> Demo.create() {
-        <span class="keyword">return</span> Demo();   <span class="comment">// bisa juga return instance tersimpan</span>
-    }
+<span class="keyword">extension</span> <span class="type">IntExt</span> <span class="keyword">on</span> <span class="type">int</span> {
+    <span class="type">bool</span> <span class="keyword">get</span> isEven => <span class="keyword">this</span> % 2 == 0;
+}
+<span class="type">void</span> main() {
+    print(10.isEven); <span class="comment">// true</span>
 }
                 </pre>
             </div>
         </div>
     </div>
 
-    <!-- KASUS 1 : SINGLETON PATTERN -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>🧠</span> Kasus 1 · Singleton Pattern (Satu Instance Global)</h2>
+    <!-- ==================== SLIDE 3 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 3</span> 🏭 Pengantar Factory Constructors
         </div>
-        <div class="section-body">
-            <p>Memastikan sebuah class hanya memiliki <strong>satu instance</strong> sepanjang aplikasi. Kombinasi private constructor + static instance + factory constructor.</p>
+        <div class="slide-content">
+            <ul>
+                <li><strong>Apa itu?</strong> Constructor khusus yang tidak selalu membuat instance baru</li>
+                <li><strong>Keyword:</strong> <code>factory</code></li>
+                <li><strong>Perbedaan dengan generative constructor:</strong>
+                    <ul>
+                        <li>Generative: <strong>Selalu</strong> membuat instance baru</li>
+                        <li>Factory: Bisa mengembalikan instance yang sudah ada, atau instance subclass</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 4 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 4</span> ✍️ Sintaks Factory Constructor
+        </div>
+        <div class="slide-content">
+            <div class="code-block">
+                <pre>
+<span class="keyword">class</span> <span class="type">MyClass</span> {
+    <span class="comment">// Generative constructor (biasa)</span>
+    MyClass();
+    
+    <span class="comment">// Factory constructor</span>
+    <span class="keyword">factory</span> MyClass.create() {
+        <span class="comment">// Bisa return instance yang sudah ada</span>
+        <span class="comment">// Atau instance dari subclass</span>
+        <span class="comment">// Atau instance baru</span>
+        <span class="keyword">return</span> MyClass();
+    }
+}
+
+<span class="type">void</span> main() {
+    var obj1 = MyClass();        <span class="comment">// Generative</span>
+    var obj2 = MyClass.create(); <span class="comment">// Factory</span>
+}
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 5 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 5</span> 🧩 Kasus 1 – Singleton Pattern
+        </div>
+        <div class="slide-content">
+            <p>Singleton: Hanya satu instance sepanjang aplikasi.</p>
             <div class="code-block">
                 <pre>
 <span class="keyword">class</span> <span class="type">DatabaseConnection</span> {
-    <span class="comment">// private constructor</span>
+    <span class="comment">// Private constructor</span>
     DatabaseConnection._internal() {
-        print(<span class="string">'Membuat koneksi database...'</span>);
+        print(<span class="string">'Creating database connection...'</span>);
     }
-    <span class="comment">// static instance tunggal</span>
+    
+    <span class="comment">// Static instance</span>
     <span class="keyword">static</span> <span class="keyword">final</span> DatabaseConnection _instance = DatabaseConnection._internal();
     
-    <span class="comment">// factory constructor mengembalikan instance yang sama</span>
+    <span class="comment">// Factory constructor</span>
     <span class="keyword">factory</span> DatabaseConnection() {
         <span class="keyword">return</span> _instance;
     }
     
-    <span class="type">void</span> connect() => print(<span class="string">'Terhubung ke database'</span>);
+    <span class="type">void</span> connect() {
+        print(<span class="string">'Connected to database'</span>);
+    }
 }
 
 <span class="type">void</span> main() {
     var db1 = DatabaseConnection();
     var db2 = DatabaseConnection();
-    print(identical(db1, db2)); <span class="comment">// true -> instance sama</span>
+    print(identical(db1, db2)); <span class="comment">// true - instance yang sama</span>
+    db1.connect();
 }
                 </pre>
-            </div>
-            <div class="highlight-box warning-red">
-                💡 <strong>Pola Singleton</strong> sangat berguna untuk resource bersama (database, logger, config).
             </div>
         </div>
     </div>
 
-    <!-- KASUS 2 : CACHING & OBJECT POOL -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>🗄️</span> Kasus 2 · Caching & Pooling (ConnectionPool)</h2>
+    <!-- ==================== SLIDE 6 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 6</span> 🗃️ Kasus 2 – Caching / ConnectionPool
         </div>
-        <div class="section-body">
-            <p>Menggunakan <strong>cache berbasis parameter</strong> untuk mengembalikan instance yang sudah pernah dibuat, menghemat resource.</p>
+        <div class="slide-content">
             <div class="code-block">
                 <pre>
 <span class="keyword">class</span> <span class="type">ConnectionPool</span> {
     <span class="keyword">final</span> String host;
     <span class="keyword">final</span> <span class="type">int</span> port;
+    
+    <span class="comment">// Cache berdasarkan parameter</span>
     <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, ConnectionPool&gt; _cache = {};
     
-    <span class="comment">// private constructor</span>
+    <span class="comment">// Private constructor</span>
     ConnectionPool._(<span class="keyword">this</span>.host, <span class="keyword">this</span>.port);
     
-    <span class="comment">// factory dengan cache</span>
+    <span class="comment">// Factory dengan caching</span>
     <span class="keyword">factory</span> ConnectionPool(String host, <span class="type">int</span> port) {
-        String key = <span class="string">'<span class="string">$host</span>:<span class="string">$port</span>'</span>;
+        var key = <span class="string">'<span class="string">$host</span>:<span class="string">$port</span>'</span>;
         <span class="keyword">if</span> (_cache.containsKey(key)) {
-            print(<span class="string">'✨ Mengembalikan koneksi dari cache untuk <span class="string">$key</span>'</span>);
+            print(<span class="string">'Returning cached connection for <span class="string">$key</span>'</span>);
             <span class="keyword">return</span> _cache[key];
         }
-        print(<span class="string">'🆕 Membuat koneksi baru untuk <span class="string">$key</span>'</span>);
-        <span class="keyword">final</span> conn = ConnectionPool._(host, port);
-        _cache[key] = conn;
-        <span class="keyword">return</span> conn;
+        print(<span class="string">'Creating new connection for <span class="string">$key</span>'</span>);
+        var connection = ConnectionPool._(host, port);
+        _cache[key] = connection;
+        <span class="keyword">return</span> connection;
     }
     
-    <span class="type">void</span> query(String sql) => print(<span class="string">'Menjalankan: <span class="string">$sql</span> pada <span class="string">$host</span>:<span class="string">$port</span>'</span>);
+    <span class="type">void</span> query(String sql) {
+        print(<span class="string">'Executing: "<span class="string">$sql</span>" on <span class="string">$host</span>:<span class="string">$port</span>'</span>);
+    }
 }
                 </pre>
+            </div>
+            <div class="highlight">
+                <strong>💡 Hasil:</strong> Memanggil <code>ConnectionPool('localhost', 5432)</code> dua kali akan mengembalikan instance yang sama dari cache.
             </div>
         </div>
     </div>
 
-    <!-- KASUS 3 : MENGEMBALIKAN SUBCLASS -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>🔀</span> Kasus 3 · Factory yang Mengembalikan Subclass</h2>
+    <!-- ==================== SLIDE 7 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 7</span> 🔄 Kasus 3 – Mengembalikan Subclass (Shape)
         </div>
-        <div class="section-body">
-            <p>Factory constructor dapat mengembalikan objek dari <strong>tipe turunan</strong> (polymorphism) berdasarkan parameter.</p>
+        <div class="slide-content">
             <div class="code-block">
                 <pre>
 <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="type">Shape</span> {
     <span class="type">void</span> draw();
     
+    <span class="comment">// Factory constructor</span>
     <span class="keyword">factory</span> Shape(String type) {
-        <span class="keyword">switch</span> (type.toLowerCase()) {
+        <span class="keyword">switch</span> (type) {
             <span class="keyword">case</span> <span class="string">'circle'</span>: <span class="keyword">return</span> Circle();
             <span class="keyword">case</span> <span class="string">'square'</span>: <span class="keyword">return</span> Square();
+            <span class="keyword">case</span> <span class="string">'triangle'</span>: <span class="keyword">return</span> Triangle();
             <span class="keyword">case</span> <span class="string">'rectangle'</span>: <span class="keyword">return</span> Rectangle();
-            <span class="keyword">default</span>: <span class="keyword">throw</span> ArgumentError(<span class="string">'Bentuk tidak dikenal'</span>);
+            <span class="keyword">default</span>: <span class="keyword">throw</span> ArgumentError(<span class="string">"Unknown shape: <span class="string">$type</span>"</span>);
         }
     }
 }
 
 <span class="keyword">class</span> <span class="type">Circle</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">'Menggambar lingkaran 🔴'</span>);
+    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing circle"</span>);
 }
 <span class="keyword">class</span> <span class="type">Square</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">'Menggambar persegi 🟧'</span>);
+    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing square"</span>);
+}
+<span class="keyword">class</span> <span class="type">Triangle</span> <span class="keyword">implements</span> Shape {
+    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing triangle"</span>);
 }
 <span class="keyword">class</span> <span class="type">Rectangle</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">'Menggambar persegi panjang 📏'</span>);
+    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing rectangle"</span>);
 }
                 </pre>
-            </div>
-            <div class="highlight-box">
-                ✅ Keuntungan: Memisahkan logika pembuatan objek kompleks dan menyembunyikan concrete class dari pengguna.
             </div>
         </div>
     </div>
 
-    <!-- KASUS RESPONSE dengan SUCCESS/ERROR (dari slide 10) -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>📦</span> Kasus 4 · Factory untuk Response (Success / Error)</h2>
+    <!-- ==================== SLIDE 8 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 8</span> 📦 Response dengan Success/Error
         </div>
-        <div class="section-body">
+        <div class="slide-content">
             <div class="code-block">
                 <pre>
 <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="type">Response</span>&lt;T&gt; {
@@ -341,10 +358,10 @@
     
     Response({<span class="keyword">this</span>.data, <span class="keyword">this</span>.error});
     
-    <span class="comment">// Factory success</span>
+    <span class="comment">// Factory untuk success</span>
     <span class="keyword">factory</span> Response.success(T data) = SuccessResponse&lt;T&gt;;
     
-    <span class="comment">// Factory error</span>
+    <span class="comment">// Factory untuk error</span>
     <span class="keyword">factory</span> Response.error(String error) = ErrorResponse&lt;T&gt;;
 }
 
@@ -357,16 +374,15 @@
 }
                 </pre>
             </div>
-            <p>Mudah digunakan: <code>Response.success(userData)</code> atau <code>Response.error('invalid')</code></p>
         </div>
     </div>
 
-    <!-- FACTORY UNTUK PAYMENT METHODS  -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>💳</span> Factory untuk Payment Methods (Subclass Selection)</h2>
+    <!-- ==================== SLIDE 9 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 9</span> 💳 Factory untuk Payment Methods
         </div>
-        <div class="section-body">
+        <div class="slide-content">
             <div class="code-block">
                 <pre>
 <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="type">PaymentMethod</span> {
@@ -377,125 +393,177 @@
             <span class="keyword">case</span> <span class="string">'creditcard'</span>: <span class="keyword">return</span> CreditCardPayment();
             <span class="keyword">case</span> <span class="string">'paypal'</span>: <span class="keyword">return</span> PayPalPayment();
             <span class="keyword">case</span> <span class="string">'banktransfer'</span>: <span class="keyword">return</span> BankTransferPayment();
-            <span class="keyword">default</span>: <span class="keyword">throw</span> ArgumentError(<span class="string">'Metode tidak valid'</span>);
+            <span class="keyword">case</span> <span class="string">'ewallet'</span>: <span class="keyword">return</span> EWalletPayment();
+            <span class="keyword">default</span>: <span class="keyword">throw</span> ArgumentError(<span class="string">'Unknown payment method: <span class="string">$type</span>'</span>);
         }
     }
 }
 
 <span class="keyword">class</span> <span class="type">CreditCardPayment</span> <span class="keyword">implements</span> PaymentMethod {
-    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'💳 Membayar \$$amount dengan Kartu Kredit'</span>);
+    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'Paying \$$amount with Credit Card'</span>);
 }
 <span class="keyword">class</span> <span class="type">PayPalPayment</span> <span class="keyword">implements</span> PaymentMethod {
-    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'📱 Membayar \$$amount dengan PayPal'</span>);
+    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'Paying \$$amount with PayPal'</span>);
 }
 <span class="keyword">class</span> <span class="type">BankTransferPayment</span> <span class="keyword">implements</span> PaymentMethod {
-    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'🏦 Transfer bank \$$amount'</span>);
+    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'Paying \$$amount with Bank Transfer'</span>);
+}
+<span class="keyword">class</span> <span class="type">EWalletPayment</span> <span class="keyword">implements</span> PaymentMethod {
+    <span class="meta">@override</span> <span class="type">void</span> pay(<span class="type">double</span> amount) => print(<span class="string">'Paying \$$amount with E-Wallet'</span>);
 }
                 </pre>
             </div>
         </div>
     </div>
 
-    <!-- IMMUTABLE OBJECTS + CACHE (Warna) -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>🎨</span> Immutable Objects & Cache · Factory Color</h2>
+    <!-- ==================== SLIDE 10 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 10</span> ⚖️ Factory Constructor vs Static Method
         </div>
-        <div class="section-body">
-            <p>Menggunakan factory dengan cache untuk objek <strong>immutable</strong> (seperti warna) sehingga warna dengan nilai RGB sama akan menggunakan instance yang sama.</p>
-            <div class="code-block">
-                <pre>
-<span class="keyword">class</span> <span class="type">Color</span> {
-    <span class="keyword">final</span> <span class="type">int</span> red, green, blue;
-    <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Color&gt; _cache = {};
-    
-    Color._(<span class="keyword">this</span>.red, <span class="keyword">this</span>.green, <span class="keyword">this</span>.blue);
-    
-    <span class="keyword">factory</span> Color.rgb(<span class="type">int</span> r, <span class="type">int</span> g, <span class="type">int</span> b) {
-        <span class="keyword">if</span> (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
-            <span class="keyword">throw</span> ArgumentError(<span class="string">'Nilai RGB 0-255'</span>);
-        }
-        String key = <span class="string">'<span class="string">$r</span>,<span class="string">$g</span>,<span class="string">$b</span>'</span>;
-        <span class="keyword">return</span> _cache.putIfAbsent(key, () => Color._(r, g, b));
-    }
-    
-    <span class="keyword">factory</span> Color.red() => Color.rgb(255, 0, 0);
-    <span class="keyword">factory</span> Color.green() => Color.rgb(0, 255, 0);
-    <span class="keyword">factory</span> Color.blue() => Color.rgb(0, 0, 255);
-}
-                </pre>
-            </div>
-        </div>
-    </div>
-
-    <!-- PERBEDAAN FACTORY CONSTRUCTOR VS STATIC METHOD -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>⚖️</span> Factory Constructor vs Static Method</h2>
-        </div>
-        <div class="section-body">
-            <div class="grid-cards">
-                <div class="card-pattern">
-                    <h3>factory Example()</h3>
-                    <p>Bisa mengembalikan subclass, digunakan dalam <code>new</code> expression, lebih natural untuk pola desain. Mendukung polymorphic creation.</p>
-                </div>
-                <div class="card-pattern">
-                    <h3>static Example.create()</h3>
-                    <p>Mirip, tapi tidak bisa digunakan di <code>extends</code> clause atau dalam <code>tear-off</code>. Factory lebih <em>idiomatic</em> untuk constructor alternatif.</p>
-                </div>
-            </div>
+        <div class="slide-content">
             <div class="code-block">
                 <pre>
 <span class="keyword">class</span> <span class="type">Example</span> {
-    Example._();
-    <span class="keyword">factory</span> Example.create() => Example._();    <span class="comment">// factory constructor</span>
-    <span class="keyword">static</span> Example createStatic() => Example._(); <span class="comment">// static method</span>
+    Example._() {}   <span class="comment">// private constructor</span>
+    
+    <span class="comment">// Factory constructor</span>
+    <span class="keyword">factory</span> Example.create() => Example._();
+    
+    <span class="comment">// Static method</span>
+    <span class="keyword">static</span> Example createStatic() => Example._();
 }
-<span class="comment">// Perbedaan subtle: factory bisa digunakan di 'new' (opsional) dan polymorphic creation</span>
+
+<span class="type">void</span> main() {
+    var e1 = Example.create();        <span class="comment">// Factory constructor</span>
+    var e2 = Example.createStatic();  <span class="comment">// Static method</span>
+    
+    print(identical(e1, e2)); <span class="comment">// false (instance berbeda)</span>
+}
                 </pre>
             </div>
+            <div class="highlight">
+                <strong>Perbedaan:</strong> Factory constructor bisa digunakan dalam <code>extends</code> clause dan lebih natural untuk pola desain. Static method lebih fleksibel secara umum tapi tidak bisa digunakan sebagai constructor redirect.
+            </div>
         </div>
     </div>
 
-    <!-- BEST PRACTICES & RINGKASAN -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>📌</span> Best Practices & Use Cases Factory Constructor</h2>
+    <!-- ==================== SLIDE 11 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 11</span> 🎨 Factory untuk Immutable Objects dengan Cache (Color)
         </div>
-        <div class="section-body">
-            <ul>
-                <li><strong>Gunakan factory untuk:</strong> Object pooling / caching, Singleton, Complex object creation, Subclass selection (polymorphism), Immutable objects dengan cache.</li>
-                <li><strong>Gunakan generative constructor untuk:</strong> Pembuatan objek sederhana, initialization lists, required parameters tanpa logika rumit.</li>
-                <li><strong>Validasi terbaik</strong> dilakukan di factory sebelum return instance.</li>
-            </ul>
-            <div class="highlight-box">
-                🧠 <strong>Inti Factory Constructor:</strong> Tidak selalu membuat instance baru → mengembalikan instance dari cache, subclass, atau mengontrol alokasi memori secara fleksibel.
+        <div class="slide-content">
+            <div class="code-block">
+                <pre>
+<span class="keyword">class</span> <span class="type">Color</span> {
+    <span class="keyword">final</span> <span class="type">int</span> red;
+    <span class="keyword">final</span> <span class="type">int</span> green;
+    <span class="keyword">final</span> <span class="type">int</span> blue;
+    
+    <span class="comment">// Cache immutable objects</span>
+    <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, Color&gt; _cache = {};
+    
+    <span class="comment">// Private constructor</span>
+    Color._(<span class="keyword">this</span>.red, <span class="keyword">this</span>.green, <span class="keyword">this</span>.blue);
+    
+    <span class="comment">// Factory dengan cache</span>
+    <span class="keyword">factory</span> Color.rgb(<span class="type">int</span> red, <span class="type">int</span> green, <span class="type">int</span> blue) {
+        <span class="comment">// Validasi</span>
+        <span class="keyword">if</span> (red < 0 || red > 255 || green < 0 || green > 255 || blue < 0 || blue > 255) {
+            <span class="keyword">throw</span> ArgumentError(<span class="string">'RGB values must be 0-255'</span>);
+        }
+        var key = <span class="string">'<span class="string">$red</span>,<span class="string">$green</span>,<span class="string">$blue</span>'</span>;
+        <span class="keyword">if</span> (!_cache.containsKey(key)) {
+            _cache[key] = Color._(red, green, blue);
+        }
+        <span class="keyword">return</span> _cache[key];
+    }
+    
+    <span class="comment">// Named factories untuk warna umum</span>
+    <span class="keyword">factory</span> Color.red() => Color.rgb(255, 0, 0);
+    <span class="keyword">factory</span> Color.green() => Color.rgb(0, 255, 0);
+    <span class="keyword">factory</span> Color.blue() => Color.rgb(0, 0, 255);
+    <span class="keyword">factory</span> Color.white() => Color.rgb(255, 255, 255);
+    <span class="keyword">factory</span> Color.black() => Color.rgb(0, 0, 0);
+    
+    <span class="meta">@override</span>
+    String toString() => <span class="string">'Color(<span class="string">$red</span>, <span class="string">$green</span>, <span class="string">$blue</span>)'</span>;
+}
+                </pre>
             </div>
+            <div class="highlight">
+                💡 <strong>Hasil:</strong> <code>identical(Color.red(), Color.rgb(255,0,0))</code> → <strong>true</strong> (instance sama karena cache)
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 12 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 12</span> 📝 Ringkasan & Best Practices
+        </div>
+        <div class="slide-content">
+            <div class="highlight">
+                <strong>Rangkuman:</strong>
+                <ul>
+                    <li>Factory constructor: <code>factory class.name()</code></li>
+                    <li>Bisa return: instance yang ada, subclass, atau baru</li>
+                    <li>Use cases: singleton, caching, object pools, subclass selection</li>
+                </ul>
+            </div>
+            <div class="highlight">
+                <strong>Best Practices:</strong>
+                <ul>
+                    <li><strong>Gunakan factory untuk:</strong> Object pooling/caching, Singleton pattern, Complex object creation, Subclass selection</li>
+                    <li><strong>Gunakan generative constructor untuk:</strong> Simple object creation, Initialization lists, Required parameters</li>
+                    <li><strong>Validation:</strong> Lakukan validasi di factory sebelum membuat objek</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 13 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 13</span> 🧪 Latihan & Challenge
+        </div>
+        <div class="slide-content">
+            <div class="highlight">
+                <strong>📌 Latihan:</strong>
+                <ol>
+                    <li>Buat ConnectionFactory dengan pooling koneksi database</li>
+                    <li>Buat NotificationFactory yang memilih subclass berdasarkan platform</li>
+                    <li>Buat ShapeFactory dengan cache untuk shapes yang sama</li>
+                </ol>
+            </div>
+            <div class="highlight">
+                <strong>🔥 Challenge:</strong><br>
+                Buat <strong>AnimalFactory</strong> dengan:
+                <ul>
+                    <li>Factory method untuk membuat berbagai jenis hewan</li>
+                    <li>Cache untuk hewan dengan atribut sama</li>
+                    <li>Validation untuk parameter</li>
+                    <li>Subclass selection berdasarkan input</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 14 ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 14</span> 🏁 Penutup
+        </div>
+        <div class="slide-content">
+            <p><strong>Kesimpulan:</strong> Factory constructor adalah fitur powerful di Dart untuk mengontrol pembuatan objek, menghemat memori dengan caching, dan mendukung polymorphism dengan mengembalikan subclass. Dengan memahami factory constructor, kita dapat menulis kode yang lebih efisien, maintainable, dan sesuai dengan design pattern seperti Singleton, Factory Method, dan Object Pool.</p>
             <hr>
-            <div class="badge-topic">🎯 LATIHAN & CHALLENGE (dari materi)</div>
-            <p><strong>Latihan:</strong> 1. ConnectionFactory dengan pooling. 2. NotificationFactory berbasis platform. 3. ShapeFactory dengan cache.<br>
-            <strong>Challenge:</strong> AnimalFactory dengan factory method, cache untuk atribut sama, validasi, subclass selection.</p>
+            <p style="text-align: center; color: #ffb4a2;">📘 <strong>Fajar Rio Dinata</strong> — NIM: 251410025<br>✨ Terima kasih, tetap semangat belajar Dart! ✨</p>
         </div>
     </div>
 
-    <!-- Penjelasan tambahan deskriptif berdasarkan pertanyaan -->
-    <div class="section-card">
-        <div class="section-header">
-            <h2><span>🧾</span> Penjelasan Materi Factory Constructor (Soal & Konsep)</h2>
-        </div>
-        <div class="section-body">
-            <p><strong>Apa itu Factory Constructor?</strong> Constructor yang menggunakan keyword <code>factory</code> dan tidak selalu menciptakan instance baru. Keuntungannya: bisa mengontrol apakah akan membuat objek baru, mengambil dari cache, atau mengembalikan tipe turunan.</p>
-            <p><strong>Mengapa dibutuhkan?</strong> Untuk menghemat memori (caching), implementasi singleton, object pool, dan menyembunyikan logika pembuatan subclass kompleks.</p>
-            <p><strong>Contoh real:</strong> Pada aplikasi payment, <code>PaymentMethod('creditcard')</code> mengembalikan CreditCardPayment, tanpa user harus tahu class konkretnya. Juga pada connection pool: <code>ConnectionPool('localhost',5432)</code> selalu mengembalikan instance yang sama untuk parameter identik.</p>
-            <div class="highlight-box">
-                🔥 <strong>Kesimpulan (Fajar Rio Dinata):</strong> Factory Constructor adalah teknik powerful dalam Dart untuk desain yang lebih fleksibel, caching, dan enkapsulasi pembuatan objek. Cocok untuk kode yang skalabel dan maintainable.
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-note">
-        📘 Materi SESI 10 · Factory Constructors · Disusun berdasarkan slide resmi & implementasi kode<br>
-        Nama: Fajar Rio Dinata | NIM: 251410025 — Tema warna merah mencerminkan semangat 🔴
+    <div class="footer">
+        Materi SESI 10: Factory Constructors — Berdasarkan slide resmi | Dart Programming Language
     </div>
 </div>
 </body>
