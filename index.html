@@ -152,6 +152,9 @@
             </ul>
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 <span class="keyword">extension</span> <span class="type">IntExt</span> <span class="keyword">on</span> <span class="type">int</span> {
     <span class="type">bool</span> <span class="keyword">get</span> isEven => <span class="keyword">this</span> % 2 == 0;
 }
@@ -217,6 +220,9 @@
         <div class="slide-content">
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 <span class="keyword">class</span> <span class="type">MyClass</span> {
     <span class="comment">// Generative constructor (biasa)</span>
     MyClass();
@@ -248,6 +254,9 @@
             <p>Singleton: Hanya satu instance sepanjang aplikasi.</p>
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 <span class="keyword">class</span> <span class="type">DatabaseConnection</span> {
     <span class="comment">// Private constructor</span>
     DatabaseConnection._internal() {
@@ -286,6 +295,9 @@
         <div class="slide-content">
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 class ConnectionPool {
   final String host;
   final int port;
@@ -355,46 +367,232 @@ void main() {
         <div class="slide-content">
             <div class="code-block">
                 <pre>
-<span class="keyword">abstract</span> <span class="keyword">class</span> <span class="type">Shape</span> {
-    <span class="type">void</span> draw();
-    
-    <span class="comment">// Factory constructor</span>
-    <span class="keyword">factory</span> Shape(String type) {
-        <span class="keyword">switch</span> (type) {
-            <span class="keyword">case</span> <span class="string">'circle'</span>: <span class="keyword">return</span> Circle();
-            <span class="keyword">case</span> <span class="string">'square'</span>: <span class="keyword">return</span> Square();
-            <span class="keyword">case</span> <span class="string">'triangle'</span>: <span class="keyword">return</span> Triangle();
-            <span class="keyword">case</span> <span class="string">'rectangle'</span>: <span class="keyword">return</span> Rectangle();
-            <span class="keyword">default</span>: <span class="keyword">throw</span> ArgumentError(<span class="string">"Unknown shape: <span class="string">$type</span>"</span>);
-        }
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
+abstract class Shape {
+  void draw();
+
+  factory Shape(String type) {
+    switch (type.toLowerCase()) {
+      case 'circle':
+        return Circle();
+      case 'square':
+        return Square();
+      case 'triangle':
+        return Triangle();
+      case 'rectangle':
+        return Rectangle();
+      default:
+        print('Unknown shape: $type. Using Circle as default.');
+        return Circle();
     }
+  }
 }
 
-<span class="keyword">class</span> <span class="type">Circle</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing circle"</span>);
+class Circle implements Shape {
+  @override
+  void draw() => print('Drawing circle');
 }
-<span class="keyword">class</span> <span class="type">Square</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing square"</span>);
+
+class Square implements Shape {
+  @override
+  void draw() => print('Drawing square');
 }
-<span class="keyword">class</span> <span class="type">Triangle</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing triangle"</span>);
+
+class Triangle implements Shape {
+  @override
+  void draw() => print('Drawing triangle');
 }
-<span class="keyword">class</span> <span class="type">Rectangle</span> <span class="keyword">implements</span> Shape {
-    <span class="meta">@override</span> <span class="type">void</span> draw() => print(<span class="string">"Drawing rectangle"</span>);
+
+class Rectangle implements Shape {
+  @override
+  void draw() => print('Drawing rectangle');
+}
+
+void main() {
+  var circle = Shape('circle');
+  var square = Shape('square');
+  var triangle = Shape('triangle');
+  var rectangle = Shape('rectangle');
+  var unknownShape = Shape('pentagon');
+
+  circle.draw();
+  square.draw();
+  triangle.draw();
+  rectangle.draw();
+  unknownShape.draw();
 }
                 </pre>
             </div>
         </div>
     </div>
 
-    <!-- ==================== SLIDE 7: RESPONSE DENGAN SUCCESS/ERROR ==================== -->
+    <!-- ==================== SLIDE 7:  Factory dengan Generic ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 7 / 14</span> 📦 Response dengan Success/Error
+            <span class="badge-page">Slide 9 / 14</span> 📦 Factory dengan Generic
         </div>
         <div class="slide-content">
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
+class AppConfig {
+  final String environment;
+  final String apiUrl;
+  final bool debugMode;
+
+  // Private constructors untuk setiap environment
+  AppConfig._development()
+      : environment = 'development',
+        apiUrl = 'http://localhost:3000',
+        debugMode = true;
+
+  AppConfig._production()
+      : environment = 'production',
+        apiUrl = 'https://api.example.com',
+        debugMode = false;
+
+  AppConfig._staging()
+      : environment = 'staging',
+        apiUrl = 'https://staging.example.com',
+        debugMode = true;
+
+  // Factory constructor
+  factory AppConfig.fromEnvironment(String env) {
+    switch (env.toLowerCase()) {
+      case 'dev':
+        return AppConfig._development();
+      case 'development':
+        return AppConfig._development();
+      case 'prod':
+        return AppConfig._production();
+      case 'production':
+        return AppConfig._production();
+      case 'stage':
+        return AppConfig._staging();
+      case 'staging':
+        return AppConfig._staging();
+      default:
+        throw ArgumentError('Unknown environment: $env');
+    }
+  }
+
+  void printConfig() {
+    print('Environment: $environment');
+    print('API URL: $apiUrl');
+    print('Debug: $debugMode');
+  }
+}
+
+void main() {
+  // Penggunaan
+  var devConfig = AppConfig.fromEnvironment('dev');
+  var prodConfig = AppConfig.fromEnvironment('prod');
+  var stageConfig = AppConfig.fromEnvironment('stage');
+
+  devConfig.printConfig();
+  prodConfig.printConfig();
+  stageConfig.printConfig();
+}
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 8: Factory dengan Named Constructors==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 8 / 14</span> Factory dengan Named Constructors
+        </div>
+        <div class="slide-content">
+            <div class="code-block">
+                <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
+class User {
+    final String id;
+    final String name;
+    final String email;
+
+    User._({required this.id, required this.name, required this.email});
+
+    // Factory dari JSON
+    factory User.fromJson(Map<String, dynamic> json) {
+    return User._(
+    id: json['id']?.toString() ?? '',
+    name: json['name']?.toString() ?? '',
+    email: json['email']?.toString() ?? '',
+    );
+    }
+
+    // Factory untuk guest user
+    factory User.guest() {
+    return User._(
+    id: 'guest_${DateTime.now().millisecondsSinceEpoch}', 
+    name: 'Guest', 
+    email: 'guest@example.com', 
+    );
+    }
+
+    // Factory dengan validation
+    factory User.create(String name, String email) {
+    if (name.isEmpty) {
+    throw ArgumentError('Name cannot be empty');
+    }
+    if (!email.contains('@')) {
+    throw ArgumentError('Invalid email');
+    }
+
+    return User._(
+    id: 'user_${DateTime.now().millisecondsSinceEpoch}', 
+    name: name, 
+    email: email, 
+    );
+    }
+
+    @override
+    String toString() {
+    return 'User(id: $id, name: $name, email: $email)';
+    }
+}
+
+void main() {
+    // Penggunaan
+    var jsonUser = User.fromJson({
+    'id': '123',
+    'name': 'Alice',
+    'email': 'alice@example.com'
+    });
+
+    var guest = User.guest();
+    var newUser = User.create('Bob', 'bob@example.com');
+
+    // Mencetak variabel-variabel
+    print('JSON User: $jsonUser');
+    print('Guest User: $guest');
+    print('New User: $newUser');
+}
+                </pre>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- ==================== SLIDE 9:  Factory dengan Generic ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 9 / 14</span> 📦 Factory dengan Generic
+        </div>
+        <div class="slide-content">
+            <div class="code-block">
+                <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="type">Response</span>&lt;T&gt; {
     <span class="keyword">final</span> T? data;
     <span class="keyword">final</span> String? error;
@@ -420,14 +618,17 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 8: FACTORY UNTUK PAYMENT METHODS ==================== -->
+    <!-- ==================== SLIDE 10: Praktik 2-FACTORY UNTUK PAYMENT METHODS ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 8 / 14</span> 💳 Factory untuk Payment Methods
+            <span class="badge-page">Slide 10/ 14</span> 💳 Praktik 2-FACTORY UNTUK PAYMENT METHODS
         </div>
         <div class="slide-content">
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="type">PaymentMethod</span> {
     <span class="type">void</span> pay(<span class="type">double</span> amount);
     
@@ -459,10 +660,10 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 9: FACTORY CONSTRUCTOR VS STATIC METHOD ==================== -->
+    <!-- ==================== SLIDE 11: FACTORY VS STATIC METHOD ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 9 / 14</span> ⚖️ Factory Constructor vs Static Method
+            <span class="badge-page">Slide 11 / 14</span> ⚖️SLIDE 11: FACTORY VS STATIC METHOD
         </div>
         <div class="slide-content">
             <div class="code-block">
@@ -484,6 +685,9 @@ void main() {
     print(identical(e1, e2)); <span class="comment">// false (instance berbeda)</span>
 }
                 </pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
             </div>
             <div class="highlight">
                 <strong>Perbedaan:</strong> Factory constructor bisa digunakan dalam <code>extends</code> clause dan lebih natural untuk pola desain. Static method lebih fleksibel secara umum tapi tidak bisa digunakan sebagai constructor redirect.
@@ -491,14 +695,17 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 10: FACTORY UNTUK IMMUTABLE OBJECTS DENGAN CACHE (COLOR) ==================== -->
+    <!-- ==================== SLIDE 12: FACTORY UNTUK IMMUTABLE OBJECTS DENGAN CACHE (COLOR) ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 10 / 14</span> 🎨 Factory untuk Immutable Objects dengan Cache (Color)
+            <span class="badge-page">Slide 12 / 14</span> 🎨 Factory untuk Immutable Objects dengan Cache (Color)
         </div>
         <div class="slide-content">
             <div class="code-block">
                 <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
 <span class="keyword">class</span> <span class="type">Color</span> {
     <span class="keyword">final</span> <span class="type">int</span> red;
     <span class="keyword">final</span> <span class="type">int</span> green;
@@ -541,10 +748,115 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 11: RINGKASAN & BEST PRACTICES ==================== -->
+         <!-- ==================== SLIDE 13:Studi Kasus-Document Factory ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 11 / 14</span> 📝 Ringkasan & Best Practices
+            <span class="badge-page">Slide 12 / 14</span> 🎨 SLIDE 13:Studi Kasus-Document Factory
+        </div>
+        <div class="slide-content">
+            <div class="code-block">
+                <pre>
+//nama:Fajar Rio Dinata
+//nim:251410025
+//kelas:S12A
+abstract class Document {
+  void render();
+
+  factory Document(String type, String content) {
+    switch (type.toLowerCase()) {
+      case 'pdf':
+        return PDFDocument(content);
+      case 'word':
+        return WordDocument(content);
+      case 'html':
+        return HTMLDocument(content);
+      case 'markdown':
+        return MarkdownDocument(content);
+      default:
+        return PlainTextDocument(content);
+    }
+  }
+}
+
+class PDFDocument implements Document {
+  final String content;
+  PDFDocument(this.content);
+
+  @override
+  void render() {
+    print('Rendering PDF: $content');
+  }
+}
+
+class WordDocument implements Document {
+  final String content;
+  WordDocument(this.content);
+
+  @override
+  void render() {
+    print('Rendering Word: $content');
+  }
+}
+
+class HTMLDocument implements Document {
+  final String content;
+  HTMLDocument(this.content);
+
+  @override
+  void render() {
+    print('Rendering HTML: $content');
+  }
+}
+
+class MarkdownDocument implements Document {
+  final String content;
+  MarkdownDocument(this.content);
+
+  @override
+  void render() {
+    print('Rendering Markdown: $content');
+  }
+}
+
+class PlainTextDocument implements Document {
+  final String content;
+  PlainTextDocument(this.content);
+
+  @override
+  void render() {
+    print('Rendering plain text: $content');
+  }
+}
+
+void main() {
+  // Contoh untuk pdf dan html
+  var doc1 = Document('pdf', 'Hello PDF');
+  var doc2 = Document('html', '<h1>Hello</h1>');
+
+  doc1.render(); // Rendering PDF: Hello PDF
+  doc2.render(); // Rendering HTML: <h1>Hello</h1>
+
+  // Contoh untuk markdown, word, dan default (plain text)
+  var doc3 = Document('markdown', '# This is a heading');
+  var doc4 = Document('word', 'This is a Word document content.');
+  var doc5 = Document('unknown type', 'This will be rendered as plain text.');
+
+  doc3.render(); // Rendering Markdown: # This is a heading
+  doc4.render(); // Rendering Word: This is a Word document content.
+  doc5.render(); // Rendering plain text: This will be rendered as plain text.
+}
+                </pre>
+            </div>
+            <div class="highlight">
+                💡 <strong>Hasil:</strong> <code>identical(Color.red(), Color.rgb(255,0,0))</code> → <strong>true</strong> (instance sama karena cache)
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SLIDE 14: RINGKASAN & BEST PRACTICES ==================== -->
+    <div class="slide-card">
+        <div class="slide-title">
+            <span class="badge-page">Slide 14 / 14</span> 📝 Ringkasan & Best Practices
         </div>
         <div class="slide-content">
             <div class="highlight">
@@ -566,10 +878,10 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 12: LATIHAN & CHALLENGE ==================== -->
+    <!-- ==================== SLIDE 15: LATIHAN & CHALLENGE ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 12 / 14</span> 🧪 Latihan & Challenge
+            <span class="badge-page">Slide 15 / 14</span> 🧪 Latihan & Challenge
         </div>
         <div class="slide-content">
             <div class="highlight">
@@ -593,10 +905,10 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 13: PENUTUP ==================== -->
+    <!-- ==================== SLIDE 16: PENUTUP ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 13 / 14</span> 🏁 Penutup
+            <span class="badge-page">Slide 16 / 14</span> 🏁 Penutup
         </div>
         <div class="slide-content">
             <p><strong>Kesimpulan:</strong> Factory constructor adalah fitur powerful di Dart untuk mengontrol pembuatan objek, menghemat memori dengan caching, dan mendukung polymorphism dengan mengembalikan subclass. Dengan memahami factory constructor, kita dapat menulis kode yang lebih efisien, maintainable, dan sesuai dengan design pattern seperti Singleton, Factory Method, dan Object Pool.</p>
@@ -605,10 +917,10 @@ void main() {
         </div>
     </div>
 
-    <!-- ==================== SLIDE 14: REFERENSI ==================== -->
+    <!-- ==================== SLIDE 17: REFERENSI ==================== -->
     <div class="slide-card">
         <div class="slide-title">
-            <span class="badge-page">Slide 14 / 14</span> 📚 Referensi
+            <span class="badge-page">Slide 17 / 14</span> 📚 Referensi
         </div>
         <div class="slide-content">
             <ul>
