@@ -286,32 +286,58 @@
         <div class="slide-content">
             <div class="code-block">
                 <pre>
-<span class="keyword">class</span> <span class="type">ConnectionPool</span> {
-    <span class="keyword">final</span> String host;
-    <span class="keyword">final</span> <span class="type">int</span> port;
-    
-    <span class="comment">// Cache berdasarkan parameter</span>
-    <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;String, ConnectionPool&gt; _cache = {};
-    
-    <span class="comment">// Private constructor</span>
-    ConnectionPool._(<span class="keyword">this</span>.host, <span class="keyword">this</span>.port);
-    
-    <span class="comment">// Factory dengan caching</span>
-    <span class="keyword">factory</span> ConnectionPool(String host, <span class="type">int</span> port) {
-        var key = <span class="string">'<span class="string">$host</span>:<span class="string">$port</span>'</span>;
-        <span class="keyword">if</span> (_cache.containsKey(key)) {
-            print(<span class="string">'Returning cached connection for <span class="string">$key</span>'</span>);
-            <span class="keyword">return</span> _cache[key];
-        }
-        print(<span class="string">'Creating new connection for <span class="string">$key</span>'</span>);
-        var connection = ConnectionPool._(host, port);
-        _cache[key] = connection;
-        <span class="keyword">return</span> connection;
+class ConnectionPool {
+  final String host;
+  final int port;
+
+  // Cache berdasarkan parameter
+  static final Map<String, ConnectionPool> _cache = {};
+
+  // Private constructor
+  ConnectionPool._(this.host, this.port);
+
+  // Factory dengan caching
+  factory ConnectionPool(String host, int port) {
+    var key = '$host:$port';
+
+    // Return dari cache jika ada
+    if (_cache.containsKey(key)) {
+      print('Returning cached connection for $key');
+      return _cache[key]!;
     }
-    
-    <span class="type">void</span> query(String sql) {
-        print(<span class="string">'Executing: "<span class="string">$sql</span>" on <span class="string">$host</span>:<span class="string">$port</span>'</span>);
-    }
+
+    // Buat baru dan cache
+    print('Creating new connection for $key');
+    var connection = ConnectionPool._(host, port);
+    _cache[key] = connection;
+    return connection;
+  }
+
+  void query(String sql) {
+    print('Executing: "$sql" on $host:$port');
+  }
+}
+
+void main() {
+  print('--- Creating conn1 (localhost:5432) ---');
+  var conn1 = ConnectionPool('localhost', 5432);
+  conn1.query('SELECT * FROM users;');
+  print('');
+
+  print('--- Creating conn2 (localhost:5432 - should be cached) ---');
+  var conn2 = ConnectionPool('localhost', 5432); // Dari cache
+  conn2.query('INSERT INTO products (name) VALUES ("Laptop");');
+  print('');
+
+  print('--- Creating conn3 (db.example.com:3306 - new connection) ---');
+  var conn3 = ConnectionPool('db.example.com', 3306); // Baru
+  conn3.query('UPDATE orders SET status="shipped" WHERE id=101;');
+  print('');
+
+  // Demonstrate that conn1 and conn2 are the same instance
+  print('Are conn1 and conn2 the same instance? ${identical(conn1, conn2)}');
+  // Demonstrate that conn1 and conn3 are different instances
+  print('Are conn1 and conn3 the same instance? ${identical(conn1, conn3)}');
 }
                 </pre>
             </div>
